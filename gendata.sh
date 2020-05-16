@@ -4,7 +4,7 @@
 set -x
 
 # define database connectivity
-_hostsrv="15.206.170.123"
+_hostsrv="13.127.147.91"
 _db="apksite"
 _db_user="admin"
 _db_password="toor"
@@ -22,7 +22,11 @@ eof
 ######## Genrate output file on remote host#####
 # mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "select appid from apkdetails   INTO OUTFILE  '/tmp/appid.csv'  FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';"
 
-mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "select appid from apkdetails" >>/tmp/appid.txt
+cat /dev/null > /tmp/appid.txt
+
+mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "select appid from apkdetails where b2apk='Y' and tobupdated ='Y'" >>/tmp/appid.txt
+
+sed -i "1d" appid.txt
 
 
 for  apps in $(cat /tmp/appid.txt)
@@ -30,6 +34,10 @@ for  apps in $(cat /tmp/appid.txt)
 
 	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "select CONCAT_WS('\n',title,descriptionHTML) from apkdetails where appid ='$apps'  INTO OUTFILE  '/tmp/$apps.txt';"
 
+	  
+mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "update apkdetails set tobupdated = 'N' where appid = '$apps'"
+	  
+echo $?
 done
 exit
 

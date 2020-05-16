@@ -15,4 +15,4 @@ sleep 15s
 ###########################################
 #************Convert to csv File***********
 #******************************************
-json2csv -i outapk.json -f appId,title,description,descriptionHTML,summary,scoreText,size,androidVersionText,developer__devId,genreId,icon,headerImage,screenshots -o newapkout.csv
+json2csv -i outapk.json -f appId,title,description,descriptionHTML,summary,scoreText,size,androidVersionText,developer__devId,genreId,icon,headerImage,screenshots,version,updated -o stg_apkdetails.csv

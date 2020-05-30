@@ -4,7 +4,7 @@
 set -x
 
 # define database connectivity
-_hostsrv="13.127.147.91"
+_hostsrv="15.206.171.176"
 _db="apksite"
 _db_user="admin"
 _db_password="toor"
@@ -53,7 +53,7 @@ echo $?
   mysqlimport --local --fields-enclosed-by='"' --fields-terminated-by=',' --lines-terminated-by="\n" --columns=$_header_columns_string -h $_hostsrv -u $_db_user -p$_db_password  $_db $_csv_directory/$_csv_file
 
 
-mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "INSERT ignore INTO apkdetails SELECT *,'N','N' FROM stg_apkdetails WHERE stg_apkdetails.appid NOT IN (SELECT apkdetails.appid FROM apkdetails )"
+mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "INSERT ignore INTO apkdetails SELECT *,'N','Y' FROM stg_apkdetails WHERE stg_apkdetails.appid NOT IN (SELECT apkdetails.appid FROM apkdetails )"
 
 done
 exit

@@ -4,7 +4,7 @@
 set -x
 
 # define database connectivity
-_hostsrv="13.127.147.91"
+_hostsrv="15.206.171.176"
 _db="apksite"
 _db_user="admin"
 _db_password="toor"
@@ -32,10 +32,10 @@ sed -i "1d" appid.txt
 for  apps in $(cat /tmp/appid.txt)
   do
 
-	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "select CONCAT_WS('\n',title,descriptionHTML) from apkdetails where appid ='$apps'  INTO OUTFILE  '/tmp/$apps.txt';"
+	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "select CONCAT_WS('\n',icon,title,descriptionHTML) from apkdetails where appid ='$apps'  INTO OUTFILE '/tmp/$apps.txt';"
 
 	  
-mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "update apkdetails set tobupdated = 'N' where appid = '$apps'"
+	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "update apkdetails set tobupdated = 'N' where appid = '$apps'"
 	  
 echo $?
 done

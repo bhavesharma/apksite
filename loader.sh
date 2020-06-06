@@ -4,11 +4,11 @@
 set -x
 
 # define database connectivity
-_hostsrv="15.206.171.176"
+_hostsrv="13.234.217.189"
 _db="apksite"
 _db_user="admin"
 _db_password="toor"
-
+source ./conn.com
 # define directory containing CSV files
 _csv_directory="/tmp/"
 

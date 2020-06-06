@@ -1,3 +1,4 @@
+PATH=/home/ec2-user/.nvm/versions/node/v13.13.0/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/ec2-user/.local/bin:/home/ec2-user/bin
 rm outapk.json
 #***********Download json Data************
 #_url="http://127.0.0.1:3000/api/apps/?fullDetail=true&collection=topselling_free&category="$1

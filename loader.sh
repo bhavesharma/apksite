@@ -1,14 +1,15 @@
 #!/bin/bash
-
+PATH=/home/ec2-user/.nvm/versions/node/v13.13.0/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/ec2-user/.local/bin:/home/ec2-user/bin
 # show commands being executed, per debug
-set -x
+#set -x
 
 # define database connectivity
 source ./conn.com
-
+LOGFILE=$_log_dir/"loader_"$LOGFILE
 # go into directory
 cd $_csv_directory
 
+echo "Processing CSV file" >>$LOGFILE
 # get a list of CSV files in directory
 _csv_files=`ls -1 *.csv`
 
@@ -37,18 +38,21 @@ sed -i '1d' $_csv_file #>${_csv_file}.tmp
 #eof
 
 
-
+echo "Truncating staging table" >>$LOGFILE
 #Empty staging table before loading
-mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "TRUNCATE TABLE $_table_name ;"
+mysql --host=$_hostsrv --user=$_db_user --password=$_db_password $_db -e "TRUNCATE TABLE $_table_name ;"
 
 echo $?
 
+echo "Truncate Table finished" >>$LOGFILE
   # import csv into mysql
   mysqlimport --local --fields-enclosed-by='"' --fields-terminated-by=',' --lines-terminated-by="\n" --columns=$_header_columns_string -h $_hostsrv -u $_db_user -p$_db_password  $_db $_csv_directory/$_csv_file
+echo "Loading final table from staging" >>$LOGFILE
 
-
-mysql --host=$_hostsrv --user=$_db_user --password=$_db_password apksite -e "INSERT ignore INTO apkdetails SELECT *,'N','Y' FROM stg_apkdetails WHERE stg_apkdetails.appid NOT IN (SELECT apkdetails.appid FROM apkdetails )"
+mysql --host=$_hostsrv --user=$_db_user --password=$_db_password $_db -e "INSERT ignore INTO apkdetails SELECT *,'N','Y','NULL' FROM stg_apkdetails WHERE stg_apkdetails.appid NOT IN (SELECT apkdetails.appid FROM apkdetails )"
 
 done
+echo "Loading of file to DB finished" >>$LOGFILE
+
 exit
 

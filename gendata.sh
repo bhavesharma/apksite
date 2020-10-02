@@ -1,6 +1,6 @@
 #!/bin/bash
 PATH=/home/ec2-user/.nvm/versions/node/v13.13.0/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/ec2-user/.local/bin:/home/ec2-user/bin
-source ./conn.com
+source con.com
 # show commands being executed, per debug
 #set -x
 LOGFILE=$_log_dir/"gendata_"$LOGFILE
@@ -8,7 +8,7 @@ LOGFILE=$_log_dir/"gendata_"$LOGFILE
 source ./conn.com
 # define directory containing CSV files
 #cd $_csv_directory
-echo "Removing extra header" >>$LOGFILE
+echo "REmoving extra header" >>$LOGFILE
 #### remove header value to be removed should be handle in upload script###
 mysql -h $_hostsrv -u $_db_user -p $_db_password $_db << eof
 DELETE FROM $_db.apkdetails WHERE  appId = "appId"

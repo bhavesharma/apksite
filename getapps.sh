@@ -14,7 +14,9 @@ fi
 echo "Starting JSON download file" >>$LOGFILE
 #***********Download json Data************
 #_url="http://127.0.0.1:3000/api/apps/?fullDetail=true&collection=topselling_free&category="$1
-curl -s -o "outapk.json" "http://127.0.0.1:3000/api/apps/?fullDetail=true&collection=topselling_free&category=SHOPPING"
+#curl -s -o "outapk.json" "http://127.0.0.1:3000/api/apps/?fullDetail=true&collection=topselling_free&category=MEDICAL"
+
+curl -s -o "outapk.json" "http://127.0.0.1:3000/api/apps/?fullDetail=true&collection=topselling_free&category=$1"
 #curl $_url
 echo "Sleeping for 20 seconds" >>$LOGFILE
 sleep 20s

@@ -5,7 +5,7 @@ PATH=/home/ec2-user/.nvm/versions/node/v13.13.0/bin:/usr/local/bin:/usr/bin:/usr
 
 # define database connectivity
 source ./conn.com
-LOGFILE=$_log_dir/"loader_"$LOGFILE
+LOGFILE=$_log_dir/"loader_MEDICAL_"$LOGFILE
 # go into directory
 cd $_csv_directory
 

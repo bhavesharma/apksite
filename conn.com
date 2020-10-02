@@ -1,8 +1,8 @@
 # define database connectivity
-_hostsrv="15.206.158.24"
-_db="apksite"
-_db_user="admin"
-_db_password="toor"
+_hostsrv="95.111.194.99"
+_db="apkfile"
+_db_user="bhawesh"
+_db_password="Z?P@2xJ=Z6"
 
 
 _csv_directory="/home/ec2-user/temp"

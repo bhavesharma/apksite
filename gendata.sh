@@ -1,14 +1,13 @@
 #!/bin/bash
 PATH=/home/ec2-user/.nvm/versions/node/v13.13.0/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/ec2-user/.local/bin:/home/ec2-user/bin
-source con.com
+source ./conn.com
 # show commands being executed, per debug
 #set -x
 LOGFILE=$_log_dir/"gendata_"$LOGFILE
 # define database connectivity
-source ./conn.com
 # define directory containing CSV files
 #cd $_csv_directory
-echo "REmoving extra header" >>$LOGFILE
+echo "Removing extra header" >>$LOGFILE
 #### remove header value to be removed should be handle in upload script###
 mysql -h $_hostsrv -u $_db_user -p $_db_password $_db << eof
 DELETE FROM $_db.apkdetails WHERE  appId = "appId"
@@ -26,7 +25,7 @@ echo "Genrating text file" >>$LOGFILE
 for  apps in $(cat /tmp/appid.txt)
   do
 
-	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password $_db -e "select CONCAT_WS('\n',icon,version,size,updated,md5,androidVersionText,title,descriptionHTML) from apkdetails where appid ='$apps'  INTO OUTFILE '/data/$apps.txt';"
+	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password $_db -e "select CONCAT_WS('\n',icon,version,size,updated,md5,androidVersionText,title,descriptionHTML) from apkdetails where appid ='$apps'  INTO OUTFILE '/data/$1/$apps.txt';"
 
 	  
 	  mysql --host=$_hostsrv --user=$_db_user --password=$_db_password $_db -e "update apkdetails set tobupdated = 'N' where appid = '$apps'"

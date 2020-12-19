@@ -1,4 +1,3 @@
-PATH=/home/ec2-user/.nvm/versions/node/v13.13.0/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/ec2-user/.local/bin:/home/ec2-user/bin
 source ./conn.com
 cd $_csv_directory
 
@@ -37,11 +36,10 @@ sleep 15s
 ###########################################
 #************Convert to csv File***********
 #******************************************
-json2csv -i outapk.json -f appId,title,description,descriptionHTML,summary,scoreText,size,androidVersionText,developer__devId,genreId,icon,headerImage,screenshots,version,updated -o stg_apkdetails.csv
+json2csv -i outapk.json -f appId,title,description,descriptionHTML,summary,scoreText,size,androidVersionText,developer__devId,genreId,icon,headerImage,screenshots,video,version,updated -o stg_apkdetails.csv
 
 if [ $? -eq 0 ]; then
   echo "Final : successfully executed csv file genrated" >>$LOGFILE
 else
   echo "Errror while creating csv from JSON EC:- $?" >>$LOGFILE
 fi
-

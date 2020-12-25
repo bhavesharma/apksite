@@ -38,6 +38,7 @@ echo $_txt_file
 _title=`head -1 $_txt_file`
 echo $_title
 #echo '<a href="https://f002.backblazeb2.com/file/apksite/'$_onlyfname.apk'"><img class="aligncenter" src="http://digitalvidia.com/wp-content/uploads/2020/07/dwnlod.png" alt="Google Sites" border="0" /> </a>' >>$_txt_file
+
 #echo '<figure class="wp-block-table"><table><tbody><tr><td><strong>Latest Version:</strong> '$_version'</td><td><strong>File Size: </strong> '$_size '</td></tr><tr><td> <strong>Last Updated: </strong> '$_updatedon'</td><td><strong>MD5</strong> : '$_md5 '</td></tr><tr><td><strong><a href="https://play.google.com/store/apps/details?id='$_onlyfname'"><img src="http://digitalvidia.com/wp-content/uploads/2020/08/google-play-badge-e1597665391807.png" alt=GPlay width="120" height="40" /> </a></strong></td><td>
 #<strong>Requirement</strong>: '$_requirment'</td></tr></tbody></table></figure>' >>$_txt_file
 
@@ -68,7 +69,9 @@ dato_temp2=$dato_temp2_0$dato_temp2_1$_size
 
 dato_temp3='";s:19:"fecha_actualizacion";s:10:"'
 
-dato_temp4='";s:14:"requerimientos";s:10:"'
+dato_temp4_0=${#_requirment}
+dato_temp4='";s:14:"requerimientos";s:'$dato_temp4_0':"'
+
 
 dato_temp5_0='";s:10:"consiguelo";s:'
 dato_temp5_1=`expr 46 + ${#_onlyfname}`':"https://play.google.com/store/apps/details?id='
@@ -107,7 +110,7 @@ echo "now index value is " $_index
    _s=(0 0 0 0 0 0 0 0 0 0 )
    _imgurl=('""' '""' '""' '""' '""' '""' '""' '""' '""' '""' )
    _imgtoday=$(date +"%Y/%m")
-   
+
    while [ $i -le $_index ]
    do
            echo $i
@@ -128,9 +131,12 @@ mysql --host=localhost --user=bhawesh --password=Z?P@2xJ=Z6 apkfile -e "INSERT I
 echo $_video
 _vurl=`echo $_video | sed 's/?.*//g' | sed  's/.*embed\///g'`
 echo $_vurl
+
+if [ "$_vurl" != "NULL" ]
+then
 _datos_video='a:1:{s:2:"id";s:'${#_vurl}':"'$_vurl'";}'
 mysql --host=localhost --user=bhawesh --password=Z?P@2xJ=Z6 apkfile -e "INSERT INTO apkfile.wp_postmeta (post_id,meta_key,meta_value) VALUES ($_post_id,'datos_video','$_datos_video')"
-
+fi
 #____________________________Add Video End_____________________________
 
 #mysql --host=localhost --user=bhawesh --password=Z?P@2xJ=Z6 apkfile -e "INSERT INTO apkfile.wp_postmeta (post_id,meta_key,meta_value) VALUES ($_post_id,'datos_imagenes','$_datos_imagenes')"
